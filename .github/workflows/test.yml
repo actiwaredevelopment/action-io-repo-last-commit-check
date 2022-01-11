@@ -22,7 +22,7 @@ jobs:
           interval: 86000
 
       - name: Echo result
-        run: echo result ${{ step.test-action.outputs.has-updates }}
+        run: echo result ${{ steps.test-action.outputs.has-updates }}
 
       - name: Echo Results (true)
         if: steps.test-action.outputs.has-updates == '1'
