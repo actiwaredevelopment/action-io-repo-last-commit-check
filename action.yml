@@ -36,7 +36,7 @@ runs:
         rm -f $HOME/data.json
 
         echo "Repository activity : $timestamp $days"
-        alive=0
+        alive=false
 
         if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
           echo "[WARNING] Ignoring activity limits : workflow triggered manually"
@@ -44,7 +44,7 @@ runs:
         else
           if [ $days -gt 1 ]; then
             echo "Repository activity : $days days ago"
-            alive=1
+            alive=true
           else
             echo "[WARNING] Repository not updated : event<${{ github.event_name }}> not allowed to modify stale repository"
           fi
