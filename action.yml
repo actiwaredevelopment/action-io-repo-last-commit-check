@@ -27,25 +27,28 @@ runs:
 
     - name: Activity check
       run: |
-        date=curl -H "Authorization: token ${{ inputs.token }}" -s https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login)][0]' | jq -r '.commit.author.date'
+        curl -H "Authorization: token ${{ inputs.token }}" -s https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login)][0]' > $HOME/data.json
+        date="$(jq -r '.commit.author.date' $HOME/data.json)"
         timestamp=$(date --utc -d "$date" +%s)
         days=$(( ( $(date --utc +%s) - $timestamp ) / ${{ inputs.interval }} ))
 
-        echo "Repository activity : $timestamp $days"
+        rm -f $HOME/data.json
+
+        echo "Repository activity : ${{ $timestamp }} ${{ days }}"
         alive=0
 
         if [ "${{ github.event_name }}" == "repository_dispatch" ]; then
           echo "[WARNING] Ignoring activity limits : workflow triggered manually"
           alive=1
         else
-          if [ $days -gt 1 ]; then
-            echo "[WARNING] Repository activity : $days days ago"
+          if [ ${{ days }} -gt 1 ]; then
+            echo "[WARNING] Repository activity : ${{ days }} days ago"
           else
             echo "[WARNING] Repository not updated : event<${{ github.event_name }}> not allowed to modify stale repository"
           fi
         fi
 
-        if [ $alive -eq 1 ]; then
+        if [ ${{ alive }} -eq 1 ]; then
           echo ::ste-output name=has-updates::true
         else
           echo ::ste-output name=has-updates::false
