@@ -16,6 +16,7 @@ inputs:
 outputs:
   has-updates: # id of output
     description: 'true the repo has updates, otherwise false'
+    value: ${{ steps.check.outputs.result }}
 runs:
   using: 'composite'
   steps:
@@ -25,7 +26,7 @@ runs:
         echo "interval: ${{ inputs.interval }}"
       shell: bash
 
-    - name: Activity check
+    - id: check
       run: |
         curl -H "Authorization: token ${{ inputs.token }}" -s https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login)][0]' > $HOME/data.json
         date="$(jq -r '.commit.author.date' $HOME/data.json)"
@@ -49,5 +50,5 @@ runs:
           fi
         fi
 
-        echo "::ste-output name=has-updates::$(echo $alive)"
+        echo "::ste-output name=result::$(echo $alive)"
       shell: bash
