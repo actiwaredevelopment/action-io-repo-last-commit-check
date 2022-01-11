@@ -22,7 +22,6 @@ runs:
     - name: Display input params
       run: |
         echo "repoURL: ${{ github.repository }}"
-        echo "branch: ${{ inputs.branch }}"
         echo "interval: ${{ inputs.interval }}"
       shell: bash
 

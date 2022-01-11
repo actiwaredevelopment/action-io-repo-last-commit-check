@@ -9,7 +9,8 @@ env:
 
 jobs:
   build:
-    runs-on: windows-latest
+    name: Test
+    runs-on: ubuntu-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -24,7 +25,7 @@ jobs:
 #        uses: ./
         uses: actiwaredevelopment/action-io-repo-updated@v0.1
         with:
-          repoURL: ${{ env.repoURL }}
+          # repoURL: ${{ env.repoURL }}
           interval: ${{ env.interval }}
 
       - name: Echo Results
