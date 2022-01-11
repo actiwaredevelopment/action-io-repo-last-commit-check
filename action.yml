@@ -43,6 +43,7 @@ runs:
         else
           if [ $days -gt 1 ]; then
             echo "[WARNING] Repository activity : $days days ago"
+            alive=1
           else
             echo "[WARNING] Repository not updated : event<${{ github.event_name }}> not allowed to modify stale repository"
           fi

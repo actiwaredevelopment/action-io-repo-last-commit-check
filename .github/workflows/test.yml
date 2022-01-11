@@ -21,6 +21,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           interval: 86000
 
-      - name: Echo Results
-#        if: steps.ShouldRunScheduledBuild.outputs.ShouldRunScheduledBuild == 'true'
-        run: echo "The value is ${{ steps.test-action.outputs.has-updates }}"
+      - name: Echo Results (true)
+        if: steps.test-action.outputs.has-updates == 'true'
+        run: echo "The value is true"
+
+      - name: Echo Results (false)
+        if: steps.test-action.outputs.has-updates == 'false'
+        run: echo "The value is false"
