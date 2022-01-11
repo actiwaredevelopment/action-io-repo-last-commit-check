@@ -49,9 +49,5 @@ runs:
           fi
         fi
 
-        if [ $alive -eq 1 ]; then
-          echo ::ste-output name=has-updates::true
-        else
-          echo ::ste-output name=has-updates::false
-        fi
+        echo "::ste-output name=has-updates::$(echo $alive)"
       shell: bash
