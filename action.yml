@@ -40,7 +40,7 @@ runs:
 
         if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
           echo "[WARNING] Ignoring activity limits : workflow triggered manually"
-          alive=1
+          alive=true
         else
           if [ $days -gt 1 ]; then
             echo "Repository activity : $days days ago"
