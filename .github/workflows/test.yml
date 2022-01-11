@@ -15,7 +15,7 @@ jobs:
       - name: Execute Action
         id: test-action
 #        uses: ./
-        uses: actiwaredevelopment/action-io-repo-updated@v0.1
+        uses: actiwaredevelopment/action-io-repo-last-commit-check@v0.1
         with:
           # repoURL: ${{ env.repoURL }}
           token: ${{ secrets.GITHUB_TOKEN }}
