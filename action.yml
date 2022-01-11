@@ -37,12 +37,12 @@ runs:
         echo "Repository activity : $timestamp $days"
         alive=0
 
-        if [ "${{ github.event_name }}" == "repository_dispatch" ]; then
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
           echo "[WARNING] Ignoring activity limits : workflow triggered manually"
           alive=1
         else
           if [ $days -gt 1 ]; then
-            echo "[WARNING] Repository activity : $days days ago"
+            echo "Repository activity : $days days ago"
             alive=1
           else
             echo "[WARNING] Repository not updated : event<${{ github.event_name }}> not allowed to modify stale repository"
