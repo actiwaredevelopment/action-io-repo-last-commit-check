@@ -50,5 +50,5 @@ runs:
           fi
         fi
 
-        echo "::ste-output name=result::$(echo $alive)"
+        echo "::set-output name=result::$(echo $alive)"
       shell: bash
