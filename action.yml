@@ -27,7 +27,7 @@ runs:
 
     - name: Activity check
       run: |
-        date=curl -sL https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login)][0]' | jq -r '.commit.author.date'
+        date=curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -s https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login)][0]' | jq -r '.commit.author.date'
         timestamp=$(date --utc -d "$date" +%s)
         days=$(( ( $(date --utc +%s) - $timestamp ) / ${{ inputs.interval }} ))
 
