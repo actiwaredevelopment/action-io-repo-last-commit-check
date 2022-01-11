@@ -1,0 +1,32 @@
+name: TestAction
+
+on:
+  workflow_dispatch:
+
+env:
+    repoURL : 'https://api.github.com/repos/actiwaredevelopment/action-io-repo-updated'
+    interval : 86400
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      - name: Execute Action
+        id: test-action
+#        uses: ./
+        uses: actiwaredevelopment/action-io-repo-updated@v0.1
+        with:
+          repoURL: ${{ env.repoURL }}
+          interval: ${{ env.interval }}
+
+      - name: Echo Results
+#        if: steps.ShouldRunScheduledBuild.outputs.ShouldRunScheduledBuild == 'true'
+        run: echo "The value is ${{ steps.test-action.outputs.has-updates }}"
