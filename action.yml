@@ -5,10 +5,10 @@ inputs:
   #   description: 'The repo address'
   #   required: true
   #   default: ''
-  # branch:
-  #   description: 'The name of the branch'
-  #   required: true
-  #   default: 'main'
+  token:
+    description: 'The authorization token'
+    required: true
+    default: ''
   interval:  # id of input
     description: 'The interval in seconds'
     required: false
@@ -27,7 +27,7 @@ runs:
 
     - name: Activity check
       run: |
-        date=curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -s https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login)][0]' | jq -r '.commit.author.date'
+        date=curl -H "Authorization: token ${{ inputs.token }}" -s https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login)][0]' | jq -r '.commit.author.date'
         timestamp=$(date --utc -d "$date" +%s)
         days=$(( ( $(date --utc +%s) - $timestamp ) / ${{ inputs.interval }} ))
 
