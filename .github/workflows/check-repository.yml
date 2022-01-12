@@ -7,10 +7,6 @@ on:
         description: 'The repository to check'
         required: true
         default: ${{ github.repository }}
-      token:
-        description: 'The authorization token'
-        required: true
-        default: ''
 
     outpus:
       has-changes:
@@ -32,7 +28,7 @@ jobs:
         uses: actiwaredevelopment/action-io-repo-last-commit-check@v0.1
         with:
           repository: ${{ inputs.repository }}
-          token: ${{ inputs.token }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           interval: 86000
 
       - name: Set output
