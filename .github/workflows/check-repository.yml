@@ -2,7 +2,7 @@ name: Check repository for changes
 
 on:
   workflow_call:
-    intputs:
+    inputs:
       repository:  # id of input
         description: 'The repository to check'
         required: true
@@ -10,7 +10,7 @@ on:
       token:
         description: 'The authorization token'
         required: true
-        default: ''
+        default: ${{ secrets.GITHUB_TOKEN }}
 
     outpus:
       has-changes:
