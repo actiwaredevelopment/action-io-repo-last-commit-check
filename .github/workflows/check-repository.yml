@@ -6,6 +6,7 @@ on:
       repository:  # id of input
         description: 'The repository to check'
         required: true
+        type: string
         default: ${{ github.repository }}
     secrets:
       token:
