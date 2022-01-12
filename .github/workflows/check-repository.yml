@@ -10,7 +10,7 @@ on:
       token:
         description: 'The authorization token'
         required: true
-        default: ${{ secrets.GITHUB_TOKEN }}
+        default: ''
 
     outpus:
       has-changes:
