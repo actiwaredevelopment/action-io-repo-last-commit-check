@@ -1,10 +1,10 @@
 name: 'Repo has new commits'
 description: 'Checks if the repo has new commits'
 inputs:
-  # repoURL:  # id of input
-  #   description: 'The repo address'
-  #   required: true
-  #   default: ''
+  repository:  # id of input
+    description: 'The repository to check'
+    required: true
+    default: ${{ github.repository }}
   token:
     description: 'The authorization token'
     required: true
@@ -22,13 +22,13 @@ runs:
   steps:
     - name: Display input params
       run: |
-        echo "repoURL: ${{ github.repository }}"
+        echo "repository: ${{ inputs.repository }}"
         echo "interval: ${{ inputs.interval }}"
       shell: bash
 
     - id: check
       run: |
-        curl -H "Authorization: token ${{ inputs.token }}" -s https://api.github.com/repos/${{ github.repository }}/commits | jq -r '[.[] | select(.author.login)][0]' > $HOME/data.json
+        curl -H "Authorization: token ${{ inputs.token }}" -s https://api.github.com/repos/${{ inputs.repository }}/commits | jq -r '[.[] | select(.author.login)][0]' > $HOME/data.json
         date="$(jq -r '.commit.author.date' $HOME/data.json)"
         timestamp=$(date --utc -d "$date" +%s)
         days=$(( ( $(date --utc +%s) - $timestamp ) / ${{ inputs.interval }} ))

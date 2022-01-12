@@ -1,0 +1,39 @@
+name: Check repository for changes
+
+on:
+  workflow_call:
+    intputs:
+      repository:  # id of input
+        description: 'The repository to check'
+        required: true
+        default: ${{ github.repository }}
+      token:
+        description: 'The authorization token'
+        required: true
+        default: ''
+
+    outpus:
+      has-changes:
+        description: 'true the repo has updates, otherwise false'
+        value: ${{ jobs.check.outputs.has-updates }}
+
+jobs:
+  check:
+    name: Check repo
+    runs-on: ubuntu-latest
+
+    outpus:
+      has-updates: ${{ steps.step1.outputs.has-updates }}
+
+    steps:
+      - name: Start checking
+        id: check-repo
+#        uses: ./
+        uses: actiwaredevelopment/action-io-repo-last-commit-check@v0.1
+        with:
+          repository: ${{ inputs.repository }}
+          token: ${{ inputs.token }}
+          interval: 86000
+
+      - name: Set output
+        run: echo "::set-output name=has-updates::${{ steps.check-repo.outputs.has-updates }}"
