@@ -18,7 +18,7 @@ jobs:
     name: Check repo
     runs-on: ubuntu-latest
 
-    outpus:
+    outputs:
       has-updates: ${{ steps.step1.outputs.has-updates }}
 
     steps:
