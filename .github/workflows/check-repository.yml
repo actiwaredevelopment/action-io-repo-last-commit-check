@@ -8,7 +8,7 @@ on:
         required: true
         default: ${{ github.repository }}
 
-    outpus:
+    outputs:
       has-changes:
         description: 'true the repo has updates, otherwise false'
         value: ${{ jobs.check.outputs.has-updates }}
