@@ -42,7 +42,7 @@ runs:
           echo "[WARNING] Ignoring activity limits : workflow triggered manually"
           alive=true
         else
-          if [ $days -gt 1 ]; then
+          if [ $days -lt 1 ]; then
             echo "Repository activity : $days days ago"
             alive=true
           else
