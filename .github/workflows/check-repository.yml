@@ -23,8 +23,8 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      has-updates: ${{ steps.step1.outputs.has-updates }}
-      has-changes: ${{ steps.step1.outputs.has-updates }}
+      has-updates: ${{ steps.check-repo.outputs.has-updates }}
+      has-changes: ${{ steps.check-repo.outputs.has-updates }}
 
     steps:
       - name: Start checking
@@ -37,4 +37,6 @@ jobs:
           interval: 86000
 
       - name: Set output
-        run: echo "::set-output name=has-updates::${{ steps.check-repo.outputs.has-updates }}"
+        run: |
+          echo "::set-output name=has-updates::${{ steps.check-repo.outputs.has-updates }}"
+          echo "::set-output name=has-changes::${{ steps.check-repo.outputs.has-updates }}"
