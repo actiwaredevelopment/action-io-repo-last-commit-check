@@ -1,33 +1,33 @@
 name: Test action
 
 on:
-  workflow_dispatch:
+    workflow_dispatch:
 
 jobs:
-  build:
-    name: Test
-    runs-on: ubuntu-latest
+    build:
+        name: Test
+        runs-on: ubuntu-latest
 
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+        steps:
+            # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+            - uses: actions/checkout@v2
 
-      - name: Execute Action
-        id: test-action
-#        uses: ./
-        uses: actiwaredevelopment/action-io-repo-last-commit-check@v0.1
-        with:
-          # repoURL: ${{ env.repoURL }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          interval: 86000
+            - name: Execute Action
+              id: test-action
+              #        uses: ./
+              uses: actiwaredevelopment/action-io-repo-last-commit-check@v0.2
+              with:
+                  # repoURL: ${{ env.repoURL }}
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  interval: 86000
 
-      - name: Echo result
-        run: echo result ${{ steps.test-action.outputs.has-updates }}
+            - name: Echo result
+              run: echo result ${{ steps.test-action.outputs.has-updates }}
 
-      - name: Echo Results (true)
-        if: steps.test-action.outputs.has-updates == 'true'
-        run: echo "The value is true"
+            - name: Echo Results (true)
+              if: steps.test-action.outputs.has-updates == 'true'
+              run: echo "The value is true"
 
-      - name: Echo Results (false)
-        if: steps.test-action.outputs.has-updates == 'false'
-        run: echo "The value is false"
+            - name: Echo Results (false)
+              if: steps.test-action.outputs.has-updates == 'false'
+              run: echo "The value is false"

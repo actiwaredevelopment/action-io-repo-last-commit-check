@@ -1,39 +1,39 @@
 name: Check repository for changes
 
 on:
-  workflow_call:
-    inputs:
-      repository:  # id of input
-        description: 'The repository to check'
-        required: true
-        type: string
-        default: ${{ github.repository }}
-    secrets:
-      token:
-        required: true
+    workflow_call:
+        inputs:
+            repository: # id of input
+                description: 'The repository to check'
+                required: true
+                type: string
+                default: ${{ github.repository }}
+        secrets:
+            token:
+                required: true
 
-    outputs:
-      has-changes:
-        description: 'true the repo has updates, otherwise false'
-        value: '${{ jobs.check.outputs.has-updates }}'
+        outputs:
+            has-changes:
+                description: 'true the repo has updates, otherwise false'
+                value: '${{ jobs.check.outputs.has-updates }}'
 
 jobs:
-  check:
-    name: Check repo
-    runs-on: ubuntu-latest
+    check:
+        name: Check repo
+        runs-on: ubuntu-latest
 
-    outputs:
-      has-updates: ${{ steps.check-repo.outputs.has-updates }}
+        outputs:
+            has-updates: ${{ steps.check-repo.outputs.has-updates }}
 
-    steps:
-      - name: Start checking
-        id: check-repo
-#        uses: ./
-        uses: actiwaredevelopment/action-io-repo-last-commit-check@v0.1
-        with:
-          repository: ${{ inputs.repository }}
-          token: ${{ secrets.token }}
-          interval: 86000
+        steps:
+            - name: Start checking
+              id: check-repo
+              #        uses: ./
+              uses: actiwaredevelopment/action-io-repo-last-commit-check@v0.2
+              with:
+                  repository: ${{ inputs.repository }}
+                  token: ${{ secrets.token }}
+                  interval: 86000
 
-      - name: Set output
-        run: echo "::set-output name=has-updates::${{ steps.check-repo.outputs.has-updates }}"
+            - name: Set output
+              run: echo "{has-updates}=${{ steps.check-repo.outputs.has-updates }}" >> $GITHUB_OUTPUT
